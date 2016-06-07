@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="739.0" prefWidth="1126.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simple.picBrowser.Controller">
+   <children>
+      <HBox layoutY="13.0">
+         <children>
+            <TextField fx:id="textField" layoutY="13.0" prefHeight="25.0" prefWidth="360.0" promptText="Sciezka..." text="No file selected" />
+            <ProgressBar fx:id="progressBar" layoutX="372.0" layoutY="23.0" prefHeight="18.0" prefWidth="404.0" progress="0.0" />
+         </children>
+      </HBox>
+      <HBox layoutX="305.0" layoutY="38.0">
+         <children>
+            <Button fx:id="openButton" layoutX="305.0" layoutY="38.0" mnemonicParsing="false" onAction="#onOpenButtonClicked" text="OPEN..." />
+            <Button fx:id="prevButton" layoutX="372.0" layoutY="39.0" mnemonicParsing="false" onAction="#onPrevButtonClicked" text="Prev" underline="true" />
+            <TextField fx:id="progressTextField" alignment="CENTER" layoutX="411.0" layoutY="39.0" prefHeight="25.0" prefWidth="78.0" />
+            <Button fx:id="nextButton" layoutX="489.0" layoutY="39.0" mnemonicParsing="false" onAction="#onNextButtonClicked" text="Next" textAlignment="RIGHT" textOverrun="CLIP" underline="true" />
+            <Button fx:id="addToFolderButton" layoutX="539.0" layoutY="39.0" mnemonicParsing="false" onAction="#onAddToFolderButtonClicked" text="Add to folder" />
+            <TextField fx:id="fileStatusTextField" alignment="CENTER" editable="false" layoutX="626.0" layoutY="39.0" prefHeight="25.0" prefWidth="158.0" />
+         </children>
+      </HBox>
+      <ListView fx:id="listViewControl" editable="true" layoutX="944.0" onMouseClicked="#onListViewClicked" prefHeight="674.0" prefWidth="182.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="944.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <ImageView fx:id="imageArea" fitHeight="542.0" fitWidth="937.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true" rotate="-0.0" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="189.0" AnchorPane.topAnchor="197.0" />
+      <Button fx:id="rotateButton" layoutX="414.0" layoutY="64.0" mnemonicParsing="false" onAction="#onRotateButtonClicked" text="Rotate" AnchorPane.topAnchor="64.0" />
+      <TextArea fx:id="propTextArea" layoutX="764.0" layoutY="13.0" prefHeight="176.0" prefWidth="176.0" />
+   </children>
+</AnchorPane>
