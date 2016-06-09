@@ -21,7 +21,7 @@ public class FilesListCreatorTest {
     @Test
     public void getPathListTest(){
         FilesListCreator files = new FilesListCreator();
-        List<File> result = files.getPathsList(path);
+        List<File> result = files.getImagePathsList(path);
         System.out.println(result.toString());
         for(int i = 0; i < result.size(); i++) {
             assertEquals(expectedList.get(i), result.get(i).getAbsolutePath());

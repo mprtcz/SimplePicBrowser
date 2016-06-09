@@ -45,7 +45,7 @@ public class Controller {
         if(currentFile!=null) {
             setTextField(currentFile);
             displayPic(currentFile);
-            fileList = FilesListCreator.getPathsList(currentFile.getAbsolutePath());
+            fileList = FilesListCreator.getImagePathsList(currentFile.getAbsolutePath());
             setProgressBar();
             setListViewControl();
         }
@@ -151,11 +151,12 @@ public class Controller {
             String copiedFilePath = folderPath + "\\" + currentFile.getName();
             try {
                 Path path = Paths.get(copiedFilePath);
+                System.out.println("path: " +path);
                 Files.copy(currentFile.toPath(), path);
                 fileStatusTextField.setStyle("-fx-background-color: lightgreen");
                 fileStatusTextField.setText("Added to folder!");
             } catch (IOException e) {
-                //e.printStackTrace();
+                e.printStackTrace();
                 fileStatusTextField.setStyle("-fx-background-color: #F00000");
                 fileStatusTextField.setText("File already exists");
             }

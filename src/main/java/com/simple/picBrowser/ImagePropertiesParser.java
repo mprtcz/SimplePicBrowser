@@ -17,6 +17,7 @@ public class ImagePropertiesParser {
         StringBuilder output = new StringBuilder();
         output.append("Height: " +img.getHeight() +"\nWidth: " +img.getWidth() +"\nIs smooth: " +img.isSmooth()
                 +"\nRatio: " +img.getHeight()/img.getWidth());
+
         double size = (double)file.length()/1048576;
         try {
             String value = new DecimalFormat("##.##").format(size);

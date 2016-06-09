@@ -8,22 +8,18 @@ import java.nio.file.Paths;
 /**
  * Created by Azet on 2015-10-28.
  */
-public class NewFolderCreator {
+class NewFolderCreator {
 
-    public static String createNewFolder(String filePath){
-        String[] pathParts = filePath.split("\\\\");
-        StringBuilder stringPathParts = new StringBuilder();
-        for(int i = 0; i < pathParts.length-1; i++){
-            String pathPart = pathParts[i] + "\\\\";
-            stringPathParts.append(pathPart);
-        }
-        stringPathParts.append("ChosenFiles");
+    static String createNewFolder(String filePath){
+        File folderPath = FilesListCreator.getFolderPath(filePath);
+        String folderPathString = folderPath.getAbsolutePath();
+        folderPathString += "\\ChosenFiles";
+        System.out.println("folderPathString = " + folderPathString);
 
-        boolean isSuccess = false;
-        Path path = Paths.get(stringPathParts.toString());
+        Path path = Paths.get(folderPathString);
         if(!Files.exists(path)){
-            isSuccess = (new File(stringPathParts.toString())).mkdirs();
+            new File(folderPathString).mkdirs();
         }
-        return path.toString();
+        return folderPathString;
     }
 }
