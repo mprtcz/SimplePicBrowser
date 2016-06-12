@@ -50,9 +50,9 @@ public class Controller {
         currentFile = PicFileReader.chooseFile(new Stage());
 
         if (currentFile != null) {
-            setTextField(currentFile);
             fileList = FilesListCreator.getImagePathsList(currentFile.getAbsolutePath());
-            displayPitures(currentFile);
+            setTextField(currentFile);
+            displayPictures(currentFile);
             setProgressBar();
             setListViewControl();
         }
@@ -70,7 +70,7 @@ public class Controller {
                 currentFile = fileList.get(0);
             }
             setProgressBar();
-            displayPitures(currentFile);
+            displayPictures(currentFile);
             setTextField(currentFile);
         }
     }
@@ -83,7 +83,7 @@ public class Controller {
                 currentFile = fileList.get(fileList.size() - 1);
             }
             setProgressBar();
-            displayPitures(currentFile);
+            displayPictures(currentFile);
             setTextField(currentFile);
         }
     }
@@ -107,7 +107,7 @@ public class Controller {
         listViewControl.setItems(filenames);
     }
 
-    public void setListFocus() {
+    private void setListFocus() {
         if (currentFile != null) {
             try {
                 int index = fileList.indexOf(currentFile);
@@ -120,7 +120,7 @@ public class Controller {
     }
 
 
-    public void setProgressBar() {
+    private void setProgressBar() {
         double index = ((double) fileList.indexOf(currentFile) + 1) / ((double) fileList.size());
         progressBar.setProgress(index);
         progressTextField.setText(fileList.indexOf(currentFile) + 1 + " z " + fileList.size());
@@ -138,7 +138,7 @@ public class Controller {
                 }
             }
             setProgressBar();
-            displayPitures(currentFile);
+            displayPictures(currentFile);
             setTextField(currentFile);
         }
     }
@@ -154,7 +154,6 @@ public class Controller {
                 fileStatusTextField.setStyle("-fx-background-color: lightgreen");
                 fileStatusTextField.setText("Added to folder!");
             } catch (IOException e) {
-                e.printStackTrace();
                 fileStatusTextField.setStyle("-fx-background-color: #F00000");
                 fileStatusTextField.setText("File already exists");
             }
@@ -188,7 +187,7 @@ public class Controller {
         displayPictureOnImageArea(fileList.get(nextFileIndex), nextImageView);
     }
 
-    public void displayPictureOnImageArea(File file, ImageView imageArea) throws MalformedURLException {
+    private void displayPictureOnImageArea(File file, ImageView imageArea) throws MalformedURLException {
         String imageData = file.toURI().toURL().toString();
         if(file == null){
             File defaultFile = new File(getClass().getResource("/2.bmp").toString());
@@ -198,7 +197,7 @@ public class Controller {
         imageArea.setImage(image);
     }
 
-    public void displayPitures(File file) throws MalformedURLException {
+    private void displayPictures(File file) throws MalformedURLException {
         displayPictureOnImageArea(file, mainImage);
         displayAddidtionalPictures();
     }
@@ -208,15 +207,21 @@ public class Controller {
         imageViewPane.setMaxHeight(0);
         mainImage.fitWidthProperty().bind(imageViewPane.widthProperty());
 
+        openButton.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if(event.getCode() == KeyCode.SPACE){
+                event.consume();
+            }
+        });
+
         openButton.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 try {
-                    if (event.getCode() == KeyCode.LEFT) {
+                    if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.UP) {
                         onPrevButtonClicked();
-                    } else if (event.getCode() == KeyCode.RIGHT) {
+                    } else if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.DOWN) {
                         onNextButtonClicked();
-                    } else if (event.getCode() == KeyCode.UP) {
+                    } else if (event.getCode() == KeyCode.SPACE) {
                         onRotateButtonClicked();
                     }
                 } catch (MalformedURLException e) {
