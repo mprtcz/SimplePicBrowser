@@ -39,7 +39,7 @@ public class Controller {
     public Button rotateButton;
     public TextArea propTextArea;
     public BorderPane borderPane;
-    public Pane imageViewPane;
+    public Pane imageViewPane, progressBarPane;
 
 
     File currentFile;
@@ -205,9 +205,8 @@ public class Controller {
 
     public void initialize() {
 
+        imageViewPane.setMaxHeight(0);
         mainImage.fitWidthProperty().bind(imageViewPane.widthProperty());
-        prevImageView.fitWidthProperty().bind(imageViewPane.widthProperty());
-        nextImageView.fitWidthProperty().bind(imageViewPane.widthProperty());
 
         openButton.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
