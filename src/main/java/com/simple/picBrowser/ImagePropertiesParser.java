@@ -15,18 +15,37 @@ public class ImagePropertiesParser {
     public static String parseImageProperties(File file) throws MalformedURLException {
         Image img = new Image(file.toURI().toURL().toString());
         StringBuilder output = new StringBuilder();
-        output.append("Height: " +img.getHeight() +"\nWidth: " +img.getWidth() +"\nIs smooth: " +img.isSmooth()
-                +"\nRatio: " +img.getHeight()/img.getWidth());
 
-        double size = (double)file.length()/1048576;
-        try {
-            String value = new DecimalFormat("##.##").format(size);
-            output.append("\nSize: " + value + " MB");
-        } catch (NumberFormatException e){
-            output.append("\nSize: " + size + " MB");
-        }
+        String ratioString = getTwoDecimalPlacesFromDouble(img.getHeight()/img.getWidth());
+        output.append("Height: ").append(img.getHeight())
+                .append("\nWidth: ")
+                .append(img.getWidth())
+                .append("\nIs smooth: ")
+                .append(img.isSmooth())
+                .append("\nRatio: ")
+                .append(ratioString);
+
+        String sizeString = getTwoDecimalPlacesFromDouble((double)file.length()/1048576);
+        output.append("\nSize: ")
+                .append(sizeString)
+                .append(" MB");
+
+
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        output.append("\nLast modified: \n" + sdf.format(file.lastModified()));
+        output.append("\nLast modified: \n")
+                .append(sdf.format(file.lastModified()));
+
         return  output.toString();
+    }
+
+    private static String getTwoDecimalPlacesFromDouble(double number){
+        String value = "???";
+        try{
+            value = new DecimalFormat("##.##").format(number);
+        } catch (NumberFormatException ex){
+            ex.printStackTrace();
+        }
+
+        return value;
     }
 }

@@ -2,7 +2,6 @@ package com.simple.picBrowser;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,8 +20,6 @@ class FilesListCreator {
 
         String[] desiredExtensions = new String[]{".bmp", ".jpg", ".png", ".gif"};
 
-        System.out.println("list of files: " + Arrays.asList(listOfFiles).toString());
-
         for(File file : listOfFiles){
             if(file.isFile()){
                 for(String e : desiredExtensions){
@@ -36,7 +33,7 @@ class FilesListCreator {
         return list;
     }
 
-    public static File getFolderPath(String filePath){
+    static File getFolderPath(String filePath){
         String[] pathParts = filePath.split("\\\\");
         StringBuilder stringPathParts = new StringBuilder();
 

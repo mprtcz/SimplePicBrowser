@@ -27,7 +27,7 @@
          </children>
       </HBox>
       <ListView fx:id="listViewControl" editable="true" layoutX="944.0" onMouseClicked="#onListViewClicked" prefHeight="674.0" prefWidth="182.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="944.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <ImageView fx:id="imageArea" fitHeight="542.0" fitWidth="937.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true" rotate="-0.0" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="189.0" AnchorPane.topAnchor="197.0" />
+      <ImageView fx:id="mainImage" fitHeight="542.0" fitWidth="937.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true" rotate="-0.0" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="189.0" AnchorPane.topAnchor="197.0" />
       <Button fx:id="rotateButton" layoutX="414.0" layoutY="64.0" mnemonicParsing="false" onAction="#onRotateButtonClicked" text="Rotate" AnchorPane.topAnchor="64.0" />
       <TextArea fx:id="propTextArea" layoutX="764.0" layoutY="13.0" prefHeight="176.0" prefWidth="176.0" />
    </children>

@@ -8,58 +8,71 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simple.picBrowser.Controller">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simple.picBrowser.Controller">
    <center>
-      <ImageView fx:id="imageArea" fitHeight="235.0" fitWidth="299.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="prevImageView" fitHeight="113.0" fitWidth="242.0" pickOnBounds="true" preserveRatio="true" />
+            <Pane fx:id="imageViewPane" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="mainImage" fitHeight="259.0" fitWidth="475.0" pickOnBounds="true" preserveRatio="true">
+                     <BorderPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </BorderPane.margin>
+                  </ImageView>
+               </children>
+            </Pane>
+            <ImageView fx:id="nextImageView" fitHeight="88.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
          <BorderPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            <Insets />
          </BorderPane.margin>
-      </ImageView>
+      </VBox>
    </center>
    <right>
       <VBox>
          <children>
-            <ListView fx:id="listViewControl" prefHeight="578.0" prefWidth="202.0" />
-            <ProgressBar fx:id="progressBar" prefHeight="18.0" prefWidth="202.0" progress="0.0" />
+            <ProgressBar fx:id="progressBar" focusTraversable="false" prefHeight="13.0" prefWidth="202.0" progress="0.0" />
+            <ListView fx:id="listViewControl" focusTraversable="false" onMouseClicked="#onListViewClicked" prefHeight="578.0" prefWidth="202.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </right>
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="560.0" prefWidth="125.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="textField">
+            <TextField fx:id="textField" focusTraversable="false">
                <VBox.margin>
                   <Insets bottom="5.0" top="5.0" />
                </VBox.margin>
             </TextField>
             <Button fx:id="openButton" mnemonicParsing="false" onAction="#onOpenButtonClicked" text="OPEN..." />
-            <Button fx:id="prevButton" alignment="CENTER" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onPrevButtonClicked" text="Previous" textAlignment="CENTER" underline="true">
+            <Button fx:id="prevButton" alignment="CENTER" focusTraversable="false" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onPrevButtonClicked" text="Previous" textAlignment="CENTER" underline="true">
                <VBox.margin>
                   <Insets bottom="5.0" top="35.0" />
                </VBox.margin>
             </Button>
-            <TextField fx:id="progressTextField" />
-            <Button fx:id="nextButton" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onNextButtonClicked" text="Next" underline="true">
+            <TextField fx:id="progressTextField" focusTraversable="false" />
+            <Button fx:id="nextButton" focusTraversable="false" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onNextButtonClicked" text="Next" underline="true">
                <VBox.margin>
                   <Insets bottom="20.0" top="5.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="rotateButton" mnemonicParsing="false" onAction="#onRotateButtonClicked" text="Rotate">
+            <Button fx:id="rotateButton" focusTraversable="false" mnemonicParsing="false" onAction="#onRotateButtonClicked" text="Rotate">
                <VBox.margin>
                   <Insets bottom="20.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="addToFolderButton" mnemonicParsing="false" onAction="#onAddToFolderButtonClicked" text="Add to folder">
+            <Button fx:id="addToFolderButton" focusTraversable="false" mnemonicParsing="false" onAction="#onAddToFolderButtonClicked" text="Add to folder">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
             </Button>
-            <TextField fx:id="fileStatusTextField">
+            <TextField fx:id="fileStatusTextField" focusTraversable="false">
                <VBox.margin>
                   <Insets bottom="35.0" />
                </VBox.margin>
             </TextField>
-            <TextArea fx:id="propTextArea" prefHeight="200.0" prefWidth="200.0" />
+            <TextArea fx:id="propTextArea" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" />
          </children>
       </VBox>
    </left>
