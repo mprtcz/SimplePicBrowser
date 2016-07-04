@@ -2,8 +2,6 @@ package com.simple.picBrowser;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -39,14 +37,14 @@ public class Controller {
     public Button rotateButton;
     public TextArea propTextArea;
     public BorderPane borderPane;
-    public Pane imageViewPane, progressBarPane;
+    public Pane imageViewPane;
 
 
-    File currentFile;
-    List<File> fileList;
-    public double rotation = 0;
+    private File currentFile;
+    private List<File> fileList;
+    private double rotation = 0;
 
-    public void onOpenButtonClicked(ActionEvent actionEvent) throws MalformedURLException {
+    public void onOpenButtonClicked() throws MalformedURLException {
         currentFile = PicFileReader.chooseFile(new Stage());
 
         if (currentFile != null) {
@@ -88,7 +86,7 @@ public class Controller {
         }
     }
 
-    public void setTextField(File file) throws MalformedURLException {
+    private void setTextField(File file) throws MalformedURLException {
         textField.setText(file.getAbsolutePath());
         fileStatusTextField.setText("");
         fileStatusTextField.setStyle("-fx-background-color: transparent");
@@ -97,7 +95,7 @@ public class Controller {
 
     }
 
-    public void setListViewControl() {
+    private void setListViewControl() {
         List<String> filenameList = new ArrayList<String>();
         for (File c : fileList) {
             filenameList.add(c.getName());
@@ -202,7 +200,7 @@ public class Controller {
         displayAddidtionalPictures();
     }
 
-    public void initialize() {
+    public void initialize(){
 
         imageViewPane.setMaxHeight(0);
         mainImage.fitWidthProperty().bind(imageViewPane.widthProperty());
@@ -213,20 +211,17 @@ public class Controller {
             }
         });
 
-        openButton.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                try {
-                    if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.UP) {
-                        onPrevButtonClicked();
-                    } else if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.DOWN) {
-                        onNextButtonClicked();
-                    } else if (event.getCode() == KeyCode.SPACE) {
-                        onRotateButtonClicked();
-                    }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
+        openButton.setOnKeyReleased(event -> {
+            try {
+                if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.UP) {
+                    onPrevButtonClicked();
+                } else if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.DOWN) {
+                    onNextButtonClicked();
+                } else if (event.getCode() == KeyCode.SPACE) {
+                    onRotateButtonClicked();
                 }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
             }
         });
     }

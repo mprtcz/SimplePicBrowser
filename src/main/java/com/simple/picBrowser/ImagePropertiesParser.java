@@ -10,9 +10,9 @@ import java.text.SimpleDateFormat;
 /**
  * Created by Azet on 2015-10-18.
  */
-public class ImagePropertiesParser {
+class ImagePropertiesParser {
 
-    public static String parseImageProperties(File file) throws MalformedURLException {
+    static String parseImageProperties(File file) throws MalformedURLException {
         Image img = new Image(file.toURI().toURL().toString());
         StringBuilder output = new StringBuilder();
 
