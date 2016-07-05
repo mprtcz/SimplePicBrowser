@@ -39,12 +39,15 @@ public class Controller {
     public BorderPane borderPane;
     public Pane imageViewPane;
 
-
+    private Stage stage;
     private File currentFile;
     private List<File> fileList;
     private double rotation = 0;
 
     public void onOpenButtonClicked() throws MalformedURLException {
+        stage = (Stage) openButton.getScene().getWindow();
+        setListeners();
+
         currentFile = PicFileReader.chooseFile(new Stage());
 
         if (currentFile != null) {
@@ -121,7 +124,7 @@ public class Controller {
     private void setProgressBar() {
         double index = ((double) fileList.indexOf(currentFile) + 1) / ((double) fileList.size());
         progressBar.setProgress(index);
-        progressTextField.setText(fileList.indexOf(currentFile) + 1 + " z " + fileList.size());
+        progressTextField.setText(fileList.indexOf(currentFile) + 1 + " of " + fileList.size());
         rotation = 0;
         mainImage.setRotate(rotation);
     }
@@ -168,7 +171,7 @@ public class Controller {
         }
     }
 
-    private void displayAddidtionalPictures() throws MalformedURLException {
+    private void displayAdditionalPictures() throws MalformedURLException {
         int index = fileList.indexOf(currentFile);
         int previousFileIndex = index - 1;
         int nextFileIndex = index + 1;
@@ -197,21 +200,17 @@ public class Controller {
 
     private void displayPictures(File file) throws MalformedURLException {
         displayPictureOnImageArea(file, mainImage);
-        displayAddidtionalPictures();
+        displayAdditionalPictures();
     }
 
-    public void initialize(){
-
-        imageViewPane.setMaxHeight(0);
-        mainImage.fitWidthProperty().bind(imageViewPane.widthProperty());
-
+    private void setListeners(){
         openButton.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if(event.getCode() == KeyCode.SPACE){
                 event.consume();
             }
         });
 
-        openButton.setOnKeyReleased(event -> {
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             try {
                 if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.UP) {
                     onPrevButtonClicked();
@@ -224,6 +223,12 @@ public class Controller {
                 e.printStackTrace();
             }
         });
+
+    }
+
+    public void initialize(){
+        imageViewPane.setMaxHeight(0);
+        mainImage.fitWidthProperty().bind(imageViewPane.widthProperty());
     }
 }
 
