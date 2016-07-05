@@ -92,4 +92,7 @@
          </children>
       </HBox>
    </top>
+   <bottom>
+      <Label text="Press left arrow or up arrow to get to previous image, down arrow or right arrow to get to next image and spacebar to rotate image by 90 degrees" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>
