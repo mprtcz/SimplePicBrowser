@@ -1,7 +1,8 @@
 # SimplePicBrowser
 Java application which allows a user to browse pictures in gif, bmp, png and jpg formats and to create a subdirectory to which a user can copy selected images.
 
-![picture](https://sc-cdn.scaleengine.net/i/40a22406bbf1cdf7a8736c520cff9d057.png)
+Application's UI:
+![picture](https://sc-cdn.scaleengine.net/i/be9d14a037f9bd389ab191bfd09a858d.png)
 
 
 To generate a jar file of this project using maven:
