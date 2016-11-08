@@ -57,7 +57,6 @@ public class Controller {
         openButton.requestFocus();
     }
 
-
     public void onNextButtonClicked() throws MalformedURLException {
         if (currentFile != null) {
             if (fileList.indexOf(currentFile) < (fileList.size() - 1)) {
@@ -182,10 +181,12 @@ public class Controller {
         stage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             try {
                 if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.UP) {
+                    event.consume();
                     onPrevButtonClicked();
                 } else if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.DOWN) {
                     onNextButtonClicked();
                 } else if (event.getCode() == KeyCode.SPACE) {
+                    event.consume();
                     onRotateButtonClicked();
                 }
             } catch (MalformedURLException e) {
