@@ -14,9 +14,8 @@ class PicFileReader {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("wtf");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Picture Only", "*.jpg", "*.png", "*.bmp", "*.gif"
+                new FileChooser.ExtensionFilter("Picture Only", "*.jpg", "*.png", "*.bmp", "*.gif", "*.tiff"
         ));
-
         return fileChooser.showOpenDialog(stage);
     }
 }

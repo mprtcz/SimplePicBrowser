@@ -10,16 +10,19 @@ import java.nio.file.Paths;
  */
 class NewFolderCreator {
 
-    static String createNewFolder(String filePath){
-        File folderPath = FilesListCreator.getFolderPath(filePath);
-        String folderPathString = folderPath.getAbsolutePath();
-        folderPathString += "\\ChosenFiles";
-        System.out.println("folderPathString = " + folderPathString);
+    private static final String DEFAULT_FOLDER_NAME = "ChosenFiles";
 
-        Path path = Paths.get(folderPathString);
-        if(!Files.exists(path)){
-            new File(folderPathString).mkdirs();
+    static String createSubFolder(File file, String folderName){
+        if(folderName==null || folderName.equals("")) {
+            folderName = DEFAULT_FOLDER_NAME;
         }
-        return folderPathString;
+        StringBuilder stringBuilder = new StringBuilder(file.getParent());
+        stringBuilder.append("\\\\")
+                .append(folderName);
+        Path path = Paths.get(stringBuilder.toString());
+        if(!Files.exists(path)){
+            new File(stringBuilder.toString()).mkdirs();
+        }
+        return path.toString();
     }
 }

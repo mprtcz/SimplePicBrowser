@@ -10,22 +10,15 @@ import java.util.List;
 class FilesListCreator {
 
 
-    static List<File> getImagePathsList(String filePath){
-        File folder = getFolderPath(filePath);
-        return getPictureFilesPathsFromFolder(folder.listFiles());
-    }
-
-    private static List<File> getPictureFilesPathsFromFolder(File[] listOfFiles){
+    static List<File> getAllFilesPathsList(File selectedFile, List<String> extensionsList) {
         List<File> list = new ArrayList<>();
 
-        String[] desiredExtensions = new String[]{".bmp", ".jpg", ".png", ".gif"};
-
-        for(File file : listOfFiles){
-            if(file.isFile()){
-                for(String e : desiredExtensions){
-                    if(file.getAbsolutePath().toLowerCase().contains(e)){
+        File[] filesInParentFolder = selectedFile.getParentFile().listFiles();
+        if (filesInParentFolder != null) {
+            for (File file : filesInParentFolder) {
+                if (file.isFile()) {
+                    if (checkFileExtension(file, extensionsList)) {
                         list.add(file);
-                        break;
                     }
                 }
             }
@@ -33,15 +26,12 @@ class FilesListCreator {
         return list;
     }
 
-    static File getFolderPath(String filePath){
-        String[] pathParts = filePath.split("\\\\");
-        StringBuilder stringPathParts = new StringBuilder();
-
-        for(int i = 0; i < pathParts.length-1; i++){
-            String pathPart = pathParts[i] + "\\\\";
-            stringPathParts.append(pathPart);
+    private static boolean checkFileExtension(File file, List<String> extensions) {
+        for (String extension : extensions) {
+            if (file.getAbsolutePath().toLowerCase().contains("." + extension)) {
+                return true;
+            }
         }
-        return new File(stringPathParts.toString());
+        return false;
     }
-
 }

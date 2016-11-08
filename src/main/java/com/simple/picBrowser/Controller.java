@@ -7,8 +7,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -19,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Azet on 2015-10-17.
@@ -27,7 +26,7 @@ public class Controller {
 
     public TextField textField;
     public Button openButton;
-    public ImageView mainImage, prevImageView, nextImageView;
+    public ImageView imageArea;
     public ProgressBar progressBar;
     public TextField progressTextField;
     public Button nextButton, prevButton;
@@ -36,8 +35,8 @@ public class Controller {
     public TextField fileStatusTextField;
     public Button rotateButton;
     public TextArea propTextArea;
-    public BorderPane borderPane;
-    public Pane imageViewPane;
+    public ListView<CheckBox> extensionsListView;
+    public TextField folderNameTextField;
 
     private Stage stage;
     private File currentFile;
@@ -47,17 +46,14 @@ public class Controller {
     public void onOpenButtonClicked() throws MalformedURLException {
         stage = (Stage) openButton.getScene().getWindow();
         setListeners();
-
         currentFile = PicFileReader.chooseFile(new Stage());
-
         if (currentFile != null) {
-            fileList = FilesListCreator.getImagePathsList(currentFile.getAbsolutePath());
+            fileList = FilesListCreator.getAllFilesPathsList(currentFile, getListOfSelectedExtensions());
             setTextField(currentFile);
-            displayPictures(currentFile);
+            displayPicture(currentFile);
             setProgressBar();
             setListViewControl();
         }
-
         openButton.requestFocus();
     }
 
@@ -71,7 +67,7 @@ public class Controller {
                 currentFile = fileList.get(0);
             }
             setProgressBar();
-            displayPictures(currentFile);
+            displayPicture(currentFile);
             setTextField(currentFile);
         }
     }
@@ -84,7 +80,7 @@ public class Controller {
                 currentFile = fileList.get(fileList.size() - 1);
             }
             setProgressBar();
-            displayPictures(currentFile);
+            displayPicture(currentFile);
             setTextField(currentFile);
         }
     }
@@ -120,13 +116,12 @@ public class Controller {
         }
     }
 
-
     private void setProgressBar() {
         double index = ((double) fileList.indexOf(currentFile) + 1) / ((double) fileList.size());
         progressBar.setProgress(index);
         progressTextField.setText(fileList.indexOf(currentFile) + 1 + " of " + fileList.size());
         rotation = 0;
-        mainImage.setRotate(rotation);
+        imageArea.setRotate(rotation);
     }
 
     public void onListViewClicked() throws MalformedURLException {
@@ -139,14 +134,14 @@ public class Controller {
                 }
             }
             setProgressBar();
-            displayPictures(currentFile);
+            displayPicture(currentFile);
             setTextField(currentFile);
         }
     }
 
     public void onAddToFolderButtonClicked() {
         if (currentFile != null) {
-            String folderPath = NewFolderCreator.createNewFolder(currentFile.getPath());
+            String folderPath = NewFolderCreator.createSubFolder(currentFile, folderNameTextField.getText());
             String copiedFilePath = folderPath + "\\" + currentFile.getName();
             try {
                 Path path = Paths.get(copiedFilePath);
@@ -167,40 +162,14 @@ public class Controller {
             if (rotation > 270) {
                 rotation = 0;
             }
-            mainImage.setRotate(rotation);
+            imageArea.setRotate(rotation);
         }
     }
 
-    private void displayAdditionalPictures() throws MalformedURLException {
-        int index = fileList.indexOf(currentFile);
-        int previousFileIndex = index - 1;
-        int nextFileIndex = index + 1;
-
-        if (previousFileIndex < 0) {
-            previousFileIndex = fileList.size() - 1;
-        }
-
-        if(nextFileIndex >= fileList.size()){
-            nextFileIndex = 0;
-        }
-
-        displayPictureOnImageArea(fileList.get(previousFileIndex), prevImageView);
-        displayPictureOnImageArea(fileList.get(nextFileIndex), nextImageView);
-    }
-
-    private void displayPictureOnImageArea(File file, ImageView imageArea) throws MalformedURLException {
-        String imageData = file.toURI().toURL().toString();
-        if(file == null){
-            File defaultFile = new File(getClass().getResource("/2.bmp").toString());
-            imageData = defaultFile.toURI().toURL().toString();
-        }
-        Image image = new Image(imageData);
+    private void displayPicture(File file) throws MalformedURLException {
+        String img = file.toURI().toURL().toString();
+        Image image = new Image(img);
         imageArea.setImage(image);
-    }
-
-    private void displayPictures(File file) throws MalformedURLException {
-        displayPictureOnImageArea(file, mainImage);
-        displayAdditionalPictures();
     }
 
     private void setListeners(){
@@ -226,9 +195,28 @@ public class Controller {
 
     }
 
-    public void initialize(){
-        imageViewPane.setMaxHeight(0);
-        mainImage.fitWidthProperty().bind(imageViewPane.widthProperty());
+    public void initialize() {
+        ObservableList<CheckBox> items = FXCollections.observableArrayList(
+                checkBoxBuilder("png", true),
+                checkBoxBuilder("jpg", true),
+                checkBoxBuilder("bmp", true),
+                checkBoxBuilder("gif", true),
+                checkBoxBuilder("tiff", false));
+        extensionsListView.setItems(items);
+    }
+
+    private CheckBox checkBoxBuilder(String name, boolean isSelected) {
+        CheckBox checkBox = new CheckBox(name);
+        checkBox.setSelected(isSelected);
+        return checkBox;
+    }
+
+    private List<String> getListOfSelectedExtensions() {
+        List<String> extensionStrings = new ArrayList<>();
+        ObservableList<CheckBox> items = extensionsListView.getItems();
+        extensionStrings.addAll(items.stream().filter(CheckBox::isSelected)
+                .map(Labeled::getText).collect(Collectors.toList()));
+        return extensionStrings;
     }
 }
 
