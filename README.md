@@ -2,7 +2,7 @@
 Java application which allows a user to browse pictures in gif, bmp, png and jpg formats and to create a subdirectory to which a user can copy selected images.
 
 Application's UI:
-![picture](https://sc-cdn.scaleengine.net/i/be9d14a037f9bd389ab191bfd09a858d.png)
+![picture](https://sc-cdn.scaleengine.net/i/bd7435efa73646cb13cb9851bb93462e1.png)
 
 
 To generate a jar file of this project using maven:

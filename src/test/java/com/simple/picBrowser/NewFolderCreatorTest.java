@@ -11,13 +11,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class NewFolderCreatorTest {
     String folderPath = "D:\\JAVA test\\omg.jpg";
-    String expected = "D:\\JAVA  test\\ChosenFiles";
+    String expected = "D:\\JAVA test\\ChosenFiles";
 
     @Test
     public void createNewFolderTest(){
         NewFolderCreator folder = new NewFolderCreator();
         String result = folder.createSubFolder(new File(folderPath), "");
-        //System.out.println(result);
         assertEquals(result, expected);
     }
 }
