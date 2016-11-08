@@ -36,17 +36,19 @@ public class Controller {
     public Button rotateButton;
     public TextArea propTextArea;
     public ListView<CheckBox> extensionsListView;
-    public TextField folderNameTextField;
+    public Button enterFolderNameButton;
+    public Label folderNameLabel;
 
     private Stage stage;
     private File currentFile;
     private List<File> fileList;
     private double rotation = 0;
+    private String subfolderName;
 
     public void onOpenButtonClicked() throws MalformedURLException {
         stage = (Stage) openButton.getScene().getWindow();
         setListeners();
-        currentFile = PicFileReader.chooseFile(new Stage());
+        currentFile = AdditionalDialogOpener.chooseFile(new Stage());
         if (currentFile != null) {
             fileList = FilesListCreator.getAllFilesPathsList(currentFile, getListOfSelectedExtensions());
             setTextField(currentFile);
@@ -55,6 +57,10 @@ public class Controller {
             setListViewControl();
         }
         openButton.requestFocus();
+    }
+
+    public void onEnterFolderNameButtonClicked() {
+        folderNameLabel.setText(AdditionalDialogOpener.enterSubfolderName());
     }
 
     public void onNextButtonClicked() throws MalformedURLException {
@@ -140,7 +146,7 @@ public class Controller {
 
     public void onAddToFolderButtonClicked() {
         if (currentFile != null) {
-            String folderPath = NewFolderCreator.createSubFolder(currentFile, folderNameTextField.getText());
+            String folderPath = NewFolderCreator.createSubFolder(currentFile, folderNameLabel.getText());
             String copiedFilePath = folderPath + "\\" + currentFile.getName();
             try {
                 Path path = Paths.get(copiedFilePath);
@@ -188,6 +194,9 @@ public class Controller {
                 } else if (event.getCode() == KeyCode.SPACE) {
                     event.consume();
                     onRotateButtonClicked();
+                } else if (event.getCode() == KeyCode.ENTER) {
+                    event.consume();
+                    onAddToFolderButtonClicked();
                 }
             } catch (MalformedURLException e) {
                 e.printStackTrace();
