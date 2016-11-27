@@ -1,6 +1,6 @@
 {
   "name": "Simplepicbrowser",
   "tagline": "Java application which allows a user to browse pictures in gif, bmp, png and jpg formats and to create a subdirectory to which a user can copy selected images",
-  "body": "# SimplePicBrowser\r\nJava application which allows a user to browse pictures in gif, bmp, png and jpg formats and to create a subdirectory to which a user can copy selected images.\r\n\r\nApplication's UI:\r\n![UI](http://pngimg.com/upload/water_PNG3290.png)\r\n\r\n\r\nTo generate a jar file of this project using maven:\r\n  1. after cloning the project, open terminal in the project's main directory and type:\r\n\r\n  `mvn package`\r\n  \r\n  2. Next go to generated `target` directory:\r\n  \r\n  `cd target`\r\n  \r\n  3. To run generated jar file enter:\r\n  \r\n  `java -jar SimplePicBrowser.jar`\r\n",
+  "body": "# SimplePicBrowser\r\nJava application which allows a user to browse pictures in gif, bmp, png and jpg formats and to create a subdirectory to which a user can copy selected images.\r\n\r\nApplication's UI:\r\n![picture](https://sc-cdn.scaleengine.net/i/bd7435efa73646cb13cb9851bb93462e1.png)\r\n\r\n\r\nTo generate a jar file of this project using maven:\r\n  1. after cloning the project, open terminal in the project's main directory and type:\r\n\r\n  `mvn package`\r\n  \r\n  2. Next go to generated `target` directory:\r\n  \r\n  `cd target`\r\n  \r\n  3. To run generated jar file enter:\r\n  \r\n  `java -jar SimplePicBrowser.jar`\r\n",
   "note": "Don't delete this file! It's used internally to help with page regeneration."
 }
