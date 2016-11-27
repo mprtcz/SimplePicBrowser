@@ -19,9 +19,23 @@ User selects a folder in which he wants to browse pictures by clicking `OPEN`
   ![fileInfo](https://sc-cdn.scaleengine.net/i/e2f1bbeaa8cad9dee4ecb70a07c592ad4.png)
   
   
+  Bottom of th window contains function buttons and fields providing additional navigation information:
+  ![fileInfo](https://sc-cdn.scaleengine.net/i/99abe815b80bf1f8dac49dcd620ccfde.png)
+  
+  * `Pev` and `Next` buttons used for switching between loaded images
+  * `Rotate` button - image rotation
+  * `Add To Folder` - adds currently displayed image to subfolder
+  * `Enter Folder Name` - invokes new window inside which a user types subfolder name. 
+  Default name is `ChosenFiles`
+  * At the end there is a progress Bar indicating at which position in the folder the displayed image is.
+    
+  
  Keyboard's arrows can be used to navigate between the folder's images :
  
- :ARROW_DOWN: 
+ * :arrow_down: :arrow_left: list's next image
+ * :arrow_up: :arrow_right: previous image
+ * `spacebar` rotates image 90 degrees clockwise 
+
 
 
 To generate a jar file of this project using maven:
