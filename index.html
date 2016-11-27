@@ -31,10 +31,52 @@
         <h1>
 <a id="simplepicbrowser" class="anchor" href="#simplepicbrowser" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SimplePicBrowser</h1>
 
-<p>Java application which allows a user to browse pictures in gif, bmp, png and jpg formats and to create a subdirectory to which a user can copy selected images.</p>
+<p>Java application which allows user to browse pictures in gif, bmp, png, tiff and jpg formats and to create a custom named 
+subdirectory to which files can can be copied. </p>
 
 <p>Application's UI:
 <img src="https://sc-cdn.scaleengine.net/i/bd7435efa73646cb13cb9851bb93462e1.png" alt="picture"></p>
+
+<p>User selects a folder in which he wants to browse pictures by clicking <code>OPEN</code> 
+ button at the top of the window. Folder is loaded by selecting an opening any file inside it. </p>
+
+<p>After load, the application displays a list of all files which extensions match an extension checklist at the left side of 
+ application's window. At the center of the window, the folder's selected image is displayed.</p>
+
+<p><img src="https://sc-cdn.scaleengine.net/i/8d08b3251ea1a31baaa10d3e3b0317b81.png" alt="fileInfo"></p>
+
+<p>Above the Extensions Checklist there is a File Information section which displays metadata about currently displayed file:
+  <img src="https://sc-cdn.scaleengine.net/i/e2f1bbeaa8cad9dee4ecb70a07c592ad4.png" alt="fileInfo"></p>
+
+<p>Bottom of th window contains function buttons and fields providing additional navigation information:
+  <img src="https://sc-cdn.scaleengine.net/i/99abe815b80bf1f8dac49dcd620ccfde.png" alt="fileInfo"></p>
+
+<ul>
+<li>
+<code>Pev</code> and <code>Next</code> buttons used for switching between loaded images</li>
+<li>
+<code>Rotate</code> button - image rotation</li>
+<li>
+<code>Add To Folder</code> - adds currently displayed image to subfolder</li>
+<li>
+<code>Enter Folder Name</code> - invokes new window inside which a user types subfolder name. 
+Default name is <code>ChosenFiles</code>
+</li>
+<li>
+<p>At the end there is a progress Bar indicating at which position in the folder the displayed image is.</p>
+
+<p>Keyboard's arrows can be used to navigate between the folder's images :</p>
+
+<ul>
+<li>
+<g-emoji alias="arrow_down" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/2b07.png" ios-version="6.0">⬇️</g-emoji> <g-emoji alias="arrow_left" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/2b05.png" ios-version="6.0">⬅️</g-emoji> list's next image</li>
+<li>
+<g-emoji alias="arrow_up" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/2b06.png" ios-version="6.0">⬆️</g-emoji> <g-emoji alias="arrow_right" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/27a1.png" ios-version="6.0">➡️</g-emoji> previous image</li>
+<li>
+<code>spacebar</code> rotates image 90 degrees clockwise </li>
+</ul>
+</li>
+</ul>
 
 <p>To generate a jar file of this project using maven:</p>
 
