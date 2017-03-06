@@ -16,10 +16,12 @@ User selects a folder in which he wants to browse pictures by clicking `OPEN`
    
   
   Above the Extensions Checklist there is a File Information section which displays metadata about currently displayed file:
+  
   ![fileInfo](https://sc-cdn.scaleengine.net/i/e2f1bbeaa8cad9dee4ecb70a07c592ad4.png)
   
   
   Bottom of th window contains function buttons and fields providing additional navigation information:
+  
   ![fileInfo](https://sc-cdn.scaleengine.net/i/99abe815b80bf1f8dac49dcd620ccfde.png)
   
   * `Pev` and `Next` buttons used for switching between loaded images
@@ -37,6 +39,8 @@ User selects a folder in which he wants to browse pictures by clicking `OPEN`
  * `spacebar` rotates image 90 degrees clockwise 
 
 
+
+---
 
 To generate a jar file of this project using maven:
   1. after cloning the project, open terminal in the project's main directory and type:
