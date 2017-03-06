@@ -33,7 +33,7 @@
       <VBox>
          <children>
             <Label text="File information:" />
-            <TextArea fx:id="propTextArea" prefHeight="176.0" prefWidth="176.0" BorderPane.alignment="CENTER">
+            <TextArea fx:id="propTextArea" editable="false" prefHeight="176.0" prefWidth="176.0" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </BorderPane.margin>
@@ -45,10 +45,13 @@
             </Label>
             <ListView fx:id="extensionsListView" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" />
          </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
       </VBox>
    </left>
    <right>
-      <ListView fx:id="listViewControl" editable="true" focusTraversable="false" onMouseClicked="#onListViewClicked" prefHeight="674.0" prefWidth="182.0" BorderPane.alignment="CENTER">
+      <ListView fx:id="folderFilesListView" editable="true" focusTraversable="false" onMouseClicked="#onListViewClicked" prefHeight="674.0" prefWidth="182.0" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>

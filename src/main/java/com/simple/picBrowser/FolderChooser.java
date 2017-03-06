@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * Created by Azet on 2015-10-17.
  */
-class AdditionalDialogOpener {
+class FolderChooser {
 
     static File chooseFile(Stage stage){
         FileChooser fileChooser = new FileChooser();

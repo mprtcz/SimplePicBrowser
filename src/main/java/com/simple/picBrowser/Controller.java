@@ -30,7 +30,7 @@ public class Controller {
     public ProgressBar progressBar;
     public TextField progressTextField;
     public Button nextButton, prevButton;
-    public ListView<String> listViewControl;
+    public ListView<String> folderFilesListView;
     public Button addToFolderButton;
     public TextField fileStatusTextField;
     public Button rotateButton;
@@ -41,80 +41,81 @@ public class Controller {
 
     private Stage stage;
     private File currentFile;
-    private List<File> fileList;
+    private List<File> files;
     private double rotation = 0;
-    private String subfolderName;
 
     public void onOpenButtonClicked() throws MalformedURLException {
         stage = (Stage) openButton.getScene().getWindow();
         setListeners();
-        currentFile = AdditionalDialogOpener.chooseFile(new Stage());
+        currentFile = FolderChooser.chooseFile(new Stage());
         if (currentFile != null) {
-            fileList = FilesListCreator.getAllFilesPathsList(currentFile, getListOfSelectedExtensions());
-            setTextField(currentFile);
-            displayPicture(currentFile);
-            setProgressBar();
-            setListViewControl();
+            files = FilesListCreator.getAllFilesPathsList(currentFile, getListOfSelectedExtensions());
+            updateGuiAfterNewSelection();
+            populateFilesListView();
         }
         openButton.requestFocus();
     }
 
     public void onEnterFolderNameButtonClicked() {
-        folderNameLabel.setText(AdditionalDialogOpener.enterSubfolderName());
+        folderNameLabel.setText(FolderChooser.enterSubfolderName());
     }
 
     public void onNextButtonClicked() throws MalformedURLException {
         if (currentFile != null) {
-            if (fileList.indexOf(currentFile) < (fileList.size() - 1)) {
-                currentFile = fileList.get(fileList.indexOf(currentFile) + 1);
+            selectNextIndex();
+            updateGuiAfterNewSelection();
+        }
+    }
 
-            } else {
-                currentFile = fileList.get(0);
-            }
-            setProgressBar();
-            displayPicture(currentFile);
-            setTextField(currentFile);
+    private void selectNextIndex() {
+        if (files.indexOf(currentFile) < (files.size() - 1)) {
+            currentFile = files.get(files.indexOf(currentFile) + 1);
+        } else {
+            currentFile = files.get(0);
         }
     }
 
     public void onPrevButtonClicked() throws MalformedURLException {
         if (currentFile != null) {
-            if (fileList.indexOf(currentFile) > 0) {
-                currentFile = fileList.get(fileList.indexOf(currentFile) - 1);
-            } else {
-                currentFile = fileList.get(fileList.size() - 1);
-            }
-            setProgressBar();
-            displayPicture(currentFile);
-            setTextField(currentFile);
+            selectPreviousIndex();
+            updateGuiAfterNewSelection();
         }
+    }
+
+    private void selectPreviousIndex() {
+        if (files.indexOf(currentFile) > 0) {
+            currentFile = files.get(files.indexOf(currentFile) - 1);
+        } else {
+            currentFile = files.get(files.size() - 1);
+        }
+    }
+
+    private void updateGuiAfterNewSelection() throws MalformedURLException {
+        setProgressBar();
+        displayPicture(currentFile);
+        setTextField(currentFile);
     }
 
     private void setTextField(File file) throws MalformedURLException {
         textField.setText(file.getAbsolutePath());
-        fileStatusTextField.setText("");
-        fileStatusTextField.setStyle("-fx-background-color: transparent");
+        styleFileStatusTextField(FileAddStatus.CLEARED);
         setListFocus();
         propTextArea.setText(ImagePropertiesParser.parseImageProperties(currentFile));
 
     }
 
-    private void setListViewControl() {
-        List<String> filenameList = new ArrayList<String>();
-        for (File c : fileList) {
-            filenameList.add(c.getName());
-        }
-
+    private void populateFilesListView() {
+        List<String> filenameList = files.stream().map(File::getName).collect(Collectors.toList());
         ObservableList<String> filenames = FXCollections.observableArrayList(filenameList);
-        listViewControl.setItems(filenames);
+        folderFilesListView.setItems(filenames);
     }
 
     private void setListFocus() {
         if (currentFile != null) {
             try {
-                int index = fileList.indexOf(currentFile);
-                listViewControl.getSelectionModel().select(index);
-                listViewControl.scrollTo(index);
+                int index = files.indexOf(currentFile);
+                folderFilesListView.getSelectionModel().select(index);
+                folderFilesListView.scrollTo(index);
             } catch (Exception e) {
                 System.out.println("error: " + e);
             }
@@ -122,25 +123,27 @@ public class Controller {
     }
 
     private void setProgressBar() {
-        double index = ((double) fileList.indexOf(currentFile) + 1) / ((double) fileList.size());
+        double index = ((double) files.indexOf(currentFile) + 1) / ((double) files.size());
         progressBar.setProgress(index);
-        progressTextField.setText(fileList.indexOf(currentFile) + 1 + " of " + fileList.size());
+        progressTextField.setText(files.indexOf(currentFile) + 1 + " of " + files.size());
         rotation = 0;
         imageArea.setRotate(rotation);
     }
 
     public void onListViewClicked() throws MalformedURLException {
-        String clickedFileName = listViewControl.getSelectionModel().getSelectedItem();
+        String clickedFileName = folderFilesListView.getSelectionModel().getSelectedItem();
         if (clickedFileName != null) {
-            for (File f : fileList) {
-                if (clickedFileName.equals(f.getName())) {
-                    currentFile = f;
-                    break;
-                }
+            findSelectedFile(clickedFileName);
+            updateGuiAfterNewSelection();
+        }
+    }
+
+    private void findSelectedFile(String clickedFileName) {
+        for (File f : files) {
+            if (clickedFileName.equals(f.getName())) {
+                currentFile = f;
+                break;
             }
-            setProgressBar();
-            displayPicture(currentFile);
-            setTextField(currentFile);
         }
     }
 
@@ -148,25 +151,28 @@ public class Controller {
         if (currentFile != null) {
             String folderPath = NewFolderCreator.createSubFolder(currentFile, folderNameLabel.getText());
             String copiedFilePath = folderPath + "\\" + currentFile.getName();
-            try {
-                Path path = Paths.get(copiedFilePath);
-                System.out.println("path: " + path);
-                Files.copy(currentFile.toPath(), path);
-                fileStatusTextField.setStyle("-fx-background-color: lightgreen");
-                fileStatusTextField.setText("Added to folder!");
-            } catch (IOException e) {
-                fileStatusTextField.setStyle("-fx-background-color: #F00000");
-                fileStatusTextField.setText("File already exists");
-            }
+            copyFileAndDisplayResult(copiedFilePath);
         }
+    }
+
+    private void copyFileAndDisplayResult(String copiedFilePath) {
+        try {
+            Path path = Paths.get(copiedFilePath);
+            Files.copy(currentFile.toPath(), path);
+            styleFileStatusTextField(FileAddStatus.ADDED);
+        } catch (IOException e) {
+            styleFileStatusTextField(FileAddStatus.ALREADY_EXISTS);
+        }
+    }
+
+    private void styleFileStatusTextField(FileAddStatus status) {
+        fileStatusTextField.setStyle(status.getStyle());
+        fileStatusTextField.setText(status.getText());
     }
 
     public void onRotateButtonClicked() {
         if (currentFile != null) {
-            rotation += 90;
-            if (rotation > 270) {
-                rotation = 0;
-            }
+            rotation = (rotation % 360) + 90;
             imageArea.setRotate(rotation);
         }
     }
@@ -177,9 +183,9 @@ public class Controller {
         imageArea.setImage(image);
     }
 
-    private void setListeners(){
+    private void setListeners() {
         openButton.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if(event.getCode() == KeyCode.SPACE){
+            if (event.getCode() == KeyCode.SPACE) {
                 event.consume();
             }
         });
@@ -187,15 +193,12 @@ public class Controller {
         stage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             try {
                 if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.UP) {
-                    event.consume();
                     onPrevButtonClicked();
                 } else if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.DOWN) {
                     onNextButtonClicked();
                 } else if (event.getCode() == KeyCode.SPACE) {
-                    event.consume();
                     onRotateButtonClicked();
                 } else if (event.getCode() == KeyCode.ENTER) {
-                    event.consume();
                     onAddToFolderButtonClicked();
                 }
             } catch (MalformedURLException e) {
@@ -227,6 +230,27 @@ public class Controller {
         extensionStrings.addAll(items.stream().filter(CheckBox::isSelected)
                 .map(Labeled::getText).collect(Collectors.toList()));
         return extensionStrings;
+    }
+
+    private enum FileAddStatus {
+        ADDED("Added to folder!", "-fx-background-color: lightgreen"),
+        CLEARED("", "-fx-background-color: transparent"),
+        ALREADY_EXISTS("File already exists", "-fx-background-color: #F00000");
+
+        private String text, style;
+
+        FileAddStatus(String text, String style) {
+            this.text = text;
+            this.style = style;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public String getStyle() {
+            return style;
+        }
     }
 }
 

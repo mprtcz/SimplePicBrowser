@@ -14,7 +14,6 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainMenu1.fxml"));
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainMENU2.fxml"));
         System.out.println(loader.getClass());
         Parent root = loader.load();
 

@@ -9,7 +9,6 @@ import java.util.List;
  */
 class FilesListCreator {
 
-
     static List<File> getAllFilesPathsList(File selectedFile, List<String> extensionsList) {
         List<File> list = new ArrayList<>();
 

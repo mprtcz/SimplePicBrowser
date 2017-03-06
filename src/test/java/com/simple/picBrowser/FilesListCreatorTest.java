@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
  * Created by Azet on 2015-10-17.
  */
 public class FilesListCreatorTest {
-    String path = "C:\\Users\\Azet\\Documents\\BitbucketREPO\\test\\SimplePicBrowser\\src\\test\\resources\\1.txt";
+    private String path = "C:\\Users\\Azet\\Documents\\BitbucketREPO\\test\\SimplePicBrowser\\src\\test\\resources\\1.txt";
     private List<String> expectedList = new ArrayList<>();
     private List<String> extensionsList = new ArrayList<>();
     {
@@ -23,7 +23,6 @@ public class FilesListCreatorTest {
     }
     @Test
     public void getPathListTest(){
-        FilesListCreator files = new FilesListCreator();
         List<File> result = FilesListCreator.getAllFilesPathsList(new File(path), extensionsList);
         System.out.println(result.toString());
         for(int i = 0; i < result.size(); i++) {
