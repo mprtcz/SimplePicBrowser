@@ -51,6 +51,8 @@ public class Controller {
     private File currentFile;
     private List<File> files;
     private double rotation = 0;
+    private ImageOrientation imageOrientation = ImageOrientation.DEFAULT;
+    private ImageRotator imageRotator;
 
     public void onOpenButtonClicked() throws MalformedURLException {
         stage = (Stage) openButton.getScene().getWindow();
@@ -58,7 +60,7 @@ public class Controller {
         currentFile = FolderChooser.chooseFile(new Stage());
         if (currentFile != null) {
             files = FilesListCreator.getAllFilesPathsList(currentFile, getListOfSelectedExtensions());
-            updateGuiAfterNewSelection();
+            onSelectedFileChanged();
             populateFilesListView();
         }
         openButton.requestFocus();
@@ -79,7 +81,7 @@ public class Controller {
     public void onNextButtonClicked() throws MalformedURLException {
         if (currentFile != null) {
             selectNextIndex();
-            updateGuiAfterNewSelection();
+            onSelectedFileChanged();
         }
     }
 
@@ -94,7 +96,7 @@ public class Controller {
     public void onPrevButtonClicked() throws MalformedURLException {
         if (currentFile != null) {
             selectPreviousIndex();
-            updateGuiAfterNewSelection();
+            onSelectedFileChanged();
         }
     }
 
@@ -106,18 +108,25 @@ public class Controller {
         }
     }
 
-    private void updateGuiAfterNewSelection() throws MalformedURLException {
+    private void onSelectedFileChanged() throws MalformedURLException {
         setProgressBar();
-        displayPicture(currentFile);
+        createImageAndItsRotator();
+        displayFIleAsBackgroundPicture();
         setTextField(currentFile);
+    }
+
+    private void createImageAndItsRotator() throws MalformedURLException {
+        this.imageOrientation = ImageOrientation.DEFAULT;
+        String img = currentFile.toURI().toURL().toString();
+        Image image = new Image(img, this.borderPane.getWidth() , this.borderPane.getHeight(), true, true);
+        this.imageRotator = new ImageRotator(image);
     }
 
     private void setTextField(File file) throws MalformedURLException {
         textField.setText(file.getAbsolutePath());
-        styleFileStatusTextField(FileAddStatus.CLEARED);
+        stylizeFileStatusTextField(FileAddStatus.CLEARED);
         setListFocus();
         propTextArea.setText(ImagePropertiesParser.parseImageProperties(currentFile));
-
     }
 
     private void populateFilesListView() {
@@ -150,7 +159,7 @@ public class Controller {
         String clickedFileName = folderFilesListView.getSelectionModel().getSelectedItem();
         if (clickedFileName != null) {
             findSelectedFile(clickedFileName);
-            updateGuiAfterNewSelection();
+            onSelectedFileChanged();
         }
     }
 
@@ -175,35 +184,31 @@ public class Controller {
         try {
             Path path = Paths.get(copiedFilePath);
             Files.copy(currentFile.toPath(), path);
-            styleFileStatusTextField(FileAddStatus.ADDED);
+            stylizeFileStatusTextField(FileAddStatus.ADDED);
         } catch (IOException e) {
-            styleFileStatusTextField(FileAddStatus.ALREADY_EXISTS);
+            stylizeFileStatusTextField(FileAddStatus.ALREADY_EXISTS);
         }
     }
 
-    private void styleFileStatusTextField(FileAddStatus status) {
+    private void stylizeFileStatusTextField(FileAddStatus status) {
         fileStatusTextField.setStyle(status.getStyle());
         fileStatusTextField.setText(status.getText());
     }
 
-    public void onRotateButtonClicked() {
+    public void onRotateButtonClicked() throws MalformedURLException {
         if (currentFile != null) {
             rotation = (rotation % 360) + 90;
             imageArea.setRotate(rotation);
         }
+        imageOrientation = ImageOrientation.next(this.imageOrientation);
+        if(currentFile != null) {
+            displayFIleAsBackgroundPicture();
+        }
     }
 
-    private void displayPicture(File file) throws MalformedURLException {
-        String img = file.toURI().toURL().toString();
-        Image image = new Image(img);
-//        imageArea.setImage(image);
-        displayPictureAsBackground(file);
-    }
-
-    private void displayPictureAsBackground(File file) throws MalformedURLException {
-        String img = file.toURI().toURL().toString();
+    private void displayFIleAsBackgroundPicture() throws MalformedURLException {
         BackgroundImage backgroundImage = new BackgroundImage(
-                new Image(img, this.borderPane.getWidth() , this.borderPane.getHeight(), true, true),
+                this.imageRotator.getRotatedImage(this.imageOrientation),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
         List<BackgroundImage> backgroundImages = new ArrayList<>();
@@ -281,6 +286,23 @@ public class Controller {
 
         public String getStyle() {
             return style;
+        }
+    }
+
+    enum ImageOrientation {
+        DEFAULT,
+        DEG90,
+        DEG180,
+        DEG270;
+
+        public static ImageOrientation next(ImageOrientation imageOrientation) {
+            switch (imageOrientation) {
+                case DEFAULT: return DEG90;
+                case DEG90: return DEG180;
+                case DEG180: return DEG270;
+                case DEG270: return DEFAULT;
+                default: return DEFAULT;
+            }
         }
     }
 }
