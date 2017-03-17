@@ -2,11 +2,14 @@ package com.simple.picBrowser;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -34,10 +37,15 @@ public class Controller {
     public Button addToFolderButton;
     public TextField fileStatusTextField;
     public Button rotateButton;
+    public Button showSideMenusButton;
     public TextArea propTextArea;
     public ListView<CheckBox> extensionsListView;
     public Button enterFolderNameButton;
     public Label folderNameLabel;
+    public BorderPane borderPane;
+    public VBox sidePanelVBox;
+    public HBox topPanelHBox;
+    public Button hideTopPanelButton;
 
     private Stage stage;
     private File currentFile;
@@ -54,6 +62,14 @@ public class Controller {
             populateFilesListView();
         }
         openButton.requestFocus();
+    }
+
+    public void onShowSideMenusButtonClicked() {
+        this.sidePanelVBox.setVisible(!this.sidePanelVBox.isVisible());
+    }
+
+    public void onHideTopPanelButtonClicked() {
+        this.topPanelHBox.setVisible(!this.topPanelHBox.isVisible());
     }
 
     public void onEnterFolderNameButtonClicked() {
@@ -180,7 +196,22 @@ public class Controller {
     private void displayPicture(File file) throws MalformedURLException {
         String img = file.toURI().toURL().toString();
         Image image = new Image(img);
-        imageArea.setImage(image);
+//        imageArea.setImage(image);
+        displayPictureAsBackground(file);
+    }
+
+    private void displayPictureAsBackground(File file) throws MalformedURLException {
+        String img = file.toURI().toURL().toString();
+        BackgroundImage backgroundImage = new BackgroundImage(
+                new Image(img, this.borderPane.getWidth() , this.borderPane.getHeight(), true, true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+        List<BackgroundImage> backgroundImages = new ArrayList<>();
+        backgroundImages.add(backgroundImage);
+        BackgroundFill backgroundFill = new BackgroundFill(Paint.valueOf("#000000"), new CornerRadii(1), new Insets(0));
+        List<BackgroundFill> backgroundFills = new ArrayList<>();
+        backgroundFills.add(backgroundFill);
+        this.borderPane.setBackground(new Background(backgroundFills, backgroundImages));
     }
 
     private void setListeners() {
