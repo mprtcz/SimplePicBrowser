@@ -10,10 +10,8 @@ public class RotatableImagesBuilder {
     private RotatableImage tiltedRotatableImage;
 
     public RotatableImagesBuilder(String sourceImagePath, double backgroundWidth, double backgroundHeight) {
-        Image basicImage = new Image(sourceImagePath, backgroundWidth, backgroundHeight, true, true);
-        Image tiltedImage = new Image(sourceImagePath, backgroundHeight, backgroundWidth, true, true);
-        this.basicRotatableImage = new RotatableImage(basicImage);
-        this.tiltedRotatableImage = new RotatableImage(tiltedImage);
+        this.basicRotatableImage = new RotatableImage(new Image(sourceImagePath, backgroundWidth, backgroundHeight, true, true));
+        this.tiltedRotatableImage = new RotatableImage(new Image(sourceImagePath, backgroundHeight, backgroundWidth, true, true));
     }
 
     public RotatableImage getBasicRotatableImage() {

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #edfff0;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simple.picBrowser.Controller">
+   <bottom>
+      <HBox alignment="CENTER" fillHeight="false" prefHeight="45.0" prefWidth="1170.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <left>
+      <VBox fx:id="sidePanelVBox">
+         <children>
+            <Label text="File information:" />
+            <TextArea fx:id="propTextArea" editable="false" prefHeight="176.0" prefWidth="176.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </BorderPane.margin>
+            </TextArea>
+            <Label text="Select extensions:">
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </Label>
+            <ListView fx:id="extensionsListView" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" />
+            <Label text="List of files:">
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </Label>
+            <ListView fx:id="folderFilesListView" editable="true" focusTraversable="false" onMouseClicked="#onListViewClicked">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </ListView>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </left>
+   <top>
+      <HBox fx:id="topPanelHBox" alignment="CENTER" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="showSideMenusButton" mnemonicParsing="false" onAction="#onShowSideMenusButtonClicked" text="v" />
+            <Button fx:id="hideTopPanelButton" mnemonicParsing="false" onAction="#onHideTopPanelButtonClicked" text="&gt;" />
+            <ProgressBar fx:id="progressBar" prefHeight="25.0" progress="0.0" />
+            <TextField fx:id="fileStatusTextField" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="158.0" />
+            <HBox fx:id="topPanelHBox" alignment="CENTER" spacing="7.0" style="-fx-background-color: #fff4ce;">
+               <children>
+                  <TextField fx:id="textField" focusTraversable="false" promptText="Sciezka..." text="No file selected" />
+                  <Button fx:id="openButton" focusTraversable="false" mnemonicParsing="false" onAction="#onOpenButtonClicked" text="OPEN..." />
+                  <Button fx:id="rotateButton" mnemonicParsing="false" onAction="#onRotateButtonClicked" text="Rotate" />
+                  <Button fx:id="prevButton" layoutX="372.0" layoutY="39.0" mnemonicParsing="false" onAction="#onPrevButtonClicked" text="Prev" underline="true" />
+                  <TextField fx:id="progressTextField" alignment="CENTER" layoutX="411.0" layoutY="39.0" prefHeight="25.0" prefWidth="78.0" />
+                  <Button fx:id="nextButton" layoutX="489.0" layoutY="39.0" mnemonicParsing="false" onAction="#onNextButtonClicked" text="Next" textAlignment="RIGHT" textOverrun="CLIP" underline="true" />
+                  <Button fx:id="addToFolderButton" layoutX="539.0" layoutY="39.0" mnemonicParsing="false" onAction="#onAddToFolderButtonClicked" text="Add to folder" />
+                  <Button fx:id="enterFolderNameButton" mnemonicParsing="false" onAction="#onEnterFolderNameButtonClicked" text="Enter Folder Name" />
+                  <Label fx:id="folderNameLabel" text="Subfolder" />
+               </children>
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+   </top>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</BorderPane>
