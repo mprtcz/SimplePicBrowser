@@ -3,7 +3,7 @@
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
+<?import javafx.scene.basicImage.*?>
 <?import javafx.scene.layout.*?>
 
 <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #edfff0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simple.picBrowser.Controller">

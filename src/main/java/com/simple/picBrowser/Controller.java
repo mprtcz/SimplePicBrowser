@@ -1,10 +1,11 @@
 package com.simple.picBrowser;
 
+import com.simple.picBrowser.rotation.ImageRotator;
+import com.simple.picBrowser.rotation.RotatableImagesBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -50,7 +51,6 @@ public class Controller {
     private Stage stage;
     private File currentFile;
     private List<File> files;
-    private double rotation = 0;
     private ImageOrientation imageOrientation = ImageOrientation.DEFAULT;
     private ImageRotator imageRotator;
 
@@ -118,8 +118,10 @@ public class Controller {
     private void createImageAndItsRotator() throws MalformedURLException {
         this.imageOrientation = ImageOrientation.DEFAULT;
         String img = currentFile.toURI().toURL().toString();
-        Image image = new Image(img, this.borderPane.getWidth() , this.borderPane.getHeight(), true, true);
-        this.imageRotator = new ImageRotator(image);
+        RotatableImagesBuilder rotatableImagesBuilder =
+                new RotatableImagesBuilder(img, this.borderPane.getWidth(), this.borderPane.getHeight());
+        this.imageRotator = new ImageRotator(rotatableImagesBuilder.getBasicRotatableImage(),
+                rotatableImagesBuilder.getTiltedRotatableImage());
     }
 
     private void setTextField(File file) throws MalformedURLException {
@@ -151,8 +153,6 @@ public class Controller {
         double index = ((double) files.indexOf(currentFile) + 1) / ((double) files.size());
         progressBar.setProgress(index);
         progressTextField.setText(files.indexOf(currentFile) + 1 + " of " + files.size());
-        rotation = 0;
-        imageArea.setRotate(rotation);
     }
 
     public void onListViewClicked() throws MalformedURLException {
@@ -196,10 +196,6 @@ public class Controller {
     }
 
     public void onRotateButtonClicked() throws MalformedURLException {
-        if (currentFile != null) {
-            rotation = (rotation % 360) + 90;
-            imageArea.setRotate(rotation);
-        }
         imageOrientation = ImageOrientation.next(this.imageOrientation);
         if(currentFile != null) {
             displayFIleAsBackgroundPicture();
@@ -289,7 +285,7 @@ public class Controller {
         }
     }
 
-    enum ImageOrientation {
+    public enum ImageOrientation {
         DEFAULT,
         DEG90,
         DEG180,
