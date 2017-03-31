@@ -27,12 +27,12 @@ User selects a folder in which he wants to browse pictures by clicking `OPEN`
   
   ![fileInfo](https://sc-cdn.scaleengine.net/i/9a2573b4ee5bb96ce16400e8d00a2344.png)
   
+  * First, there is a progress Bar indicating at which position in the file list the displayed image is.
   * `Pev` and `Next` buttons used for switching between loaded images
   * `Rotate` button - image rotation
   * `Add To Folder` - adds currently displayed image to subfolder
   * `Enter Folder Name` - invokes new window inside which a user types subfolder name. 
   Default name is `Subfolder`
-  * At the end there is a progress Bar indicating at which position in the file list the displayed image is.
     
   
  Keyboard's arrows can be used to navigate between the folder's images :
