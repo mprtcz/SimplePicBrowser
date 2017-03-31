@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #edfff0;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simple.picBrowser.Controller">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #9aa0a6;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simple.picBrowser.Controller">
    <bottom>
       <HBox alignment="CENTER" fillHeight="false" prefHeight="45.0" prefWidth="1170.0" BorderPane.alignment="CENTER" />
    </bottom>
@@ -53,7 +53,7 @@
             <Button fx:id="hideTopPanelButton" mnemonicParsing="false" onAction="#onHideTopPanelButtonClicked" text="&gt;" />
             <ProgressBar fx:id="progressBar" prefHeight="25.0" progress="0.0" />
             <TextField fx:id="fileStatusTextField" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="158.0" />
-            <HBox fx:id="topPanelHBox" alignment="CENTER" spacing="7.0" style="-fx-background-color: #fff4ce;">
+            <HBox fx:id="topPanelHBox" alignment="CENTER" spacing="7.0" style="-fx-background-color: #9aa0a6;">
                <children>
                   <TextField fx:id="textField" focusTraversable="false" promptText="Sciezka..." text="No file selected" />
                   <Button fx:id="openButton" focusTraversable="false" mnemonicParsing="false" onAction="#onOpenButtonClicked" text="OPEN..." />
