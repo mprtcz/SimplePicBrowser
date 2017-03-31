@@ -16,26 +16,35 @@
       <HBox alignment="CENTER" fillHeight="false" prefHeight="45.0" prefWidth="1170.0" BorderPane.alignment="CENTER" />
    </bottom>
    <left>
-      <VBox fx:id="sidePanelVBox">
+      <VBox fx:id="sidePanelVBox" prefWidth="200.0">
          <children>
-            <Label text="File information:" />
-            <TextArea fx:id="propTextArea" editable="false" prefHeight="176.0" prefWidth="176.0" BorderPane.alignment="CENTER">
+            <Label style="-fx-background-color: darkgray;" text="File information:" textFill="WHITE">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding></Label>
+            <TextArea fx:id="propTextArea" editable="false" maxWidth="1.7976931348623157E308" prefHeight="176.0" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </BorderPane.margin>
             </TextArea>
-            <Label text="Select extensions:">
-               <padding>
+            <Label style="-fx-background-color: darkgray;" text="Select extensions:" textFill="WHITE">
+               <VBox.margin>
                   <Insets top="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding>
             </Label>
             <ListView fx:id="extensionsListView" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" />
-            <Label text="List of files:">
-               <padding>
+            <Label alignment="CENTER_RIGHT" style="-fx-background-color: darkgray;" text="List of files:" textFill="WHITE">
+               <VBox.margin>
                   <Insets top="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding>
             </Label>
-            <ListView fx:id="folderFilesListView" editable="true" focusTraversable="false" onMouseClicked="#onListViewClicked">
+            <ListView fx:id="folderFilesListView" editable="true" focusTraversable="false" maxWidth="1.7976931348623157E308" onMouseClicked="#onListViewClicked">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
@@ -51,8 +60,8 @@
          <children>
             <Button fx:id="showSideMenusButton" mnemonicParsing="false" onAction="#onShowSideMenusButtonClicked" text="v" />
             <Button fx:id="hideTopPanelButton" mnemonicParsing="false" onAction="#onHideTopPanelButtonClicked" text="&gt;" />
-            <ProgressBar fx:id="progressBar" prefHeight="25.0" progress="0.0" />
             <TextField fx:id="fileStatusTextField" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="158.0" />
+            <ProgressBar fx:id="progressBar" prefHeight="25.0" progress="0.0" />
             <HBox fx:id="topPanelHBox" alignment="CENTER" spacing="7.0" style="-fx-background-color: #9aa0a6;">
                <children>
                   <TextField fx:id="textField" focusTraversable="false" promptText="Sciezka..." text="No file selected" />
@@ -63,10 +72,13 @@
                   <Button fx:id="nextButton" layoutX="489.0" layoutY="39.0" mnemonicParsing="false" onAction="#onNextButtonClicked" text="Next" textAlignment="RIGHT" textOverrun="CLIP" underline="true" />
                   <Button fx:id="addToFolderButton" layoutX="539.0" layoutY="39.0" mnemonicParsing="false" onAction="#onAddToFolderButtonClicked" text="Add to folder" />
                   <Button fx:id="enterFolderNameButton" mnemonicParsing="false" onAction="#onEnterFolderNameButtonClicked" text="Enter Folder Name" />
-                  <Label fx:id="folderNameLabel" text="Subfolder" />
+                  <Label fx:id="folderNameLabel" text="Subfolder">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin></Label>
                </children>
                <padding>
-                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                  <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                </padding>
             </HBox>
          </children>

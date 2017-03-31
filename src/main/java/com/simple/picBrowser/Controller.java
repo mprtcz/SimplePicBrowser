@@ -129,6 +129,7 @@ public class Controller {
         stylizeFileStatusTextField(FileAddStatus.CLEARED);
         setListFocus();
         propTextArea.setText(ImagePropertiesParser.parseImageProperties(currentFile));
+        propTextArea.setWrapText(true);
     }
 
     private void populateFilesListView() {
@@ -224,12 +225,14 @@ public class Controller {
 
         stage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             try {
-                if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.UP) {
+                if (event.getCode() == KeyCode.LEFT) {
                     onPrevButtonClicked();
-                } else if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.DOWN) {
+                } else if (event.getCode() == KeyCode.RIGHT) {
                     onNextButtonClicked();
-                } else if (event.getCode() == KeyCode.SPACE) {
+                } else if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN) {
                     onRotateButtonClicked();
+//                } else if (event.getCode() == KeyCode.SPACE) {
+//                    onRotateButtonClicked();
                 } else if (event.getCode() == KeyCode.ENTER) {
                     onAddToFolderButtonClicked();
                 }
