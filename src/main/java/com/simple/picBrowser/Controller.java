@@ -198,7 +198,7 @@ public class Controller {
 
     public void onRotateButtonClicked() throws MalformedURLException {
         imageOrientation = ImageOrientation.next(this.imageOrientation);
-        if(currentFile != null) {
+        if (currentFile != null) {
             displayFIleAsBackgroundPicture();
         }
     }
@@ -296,11 +296,16 @@ public class Controller {
 
         public static ImageOrientation next(ImageOrientation imageOrientation) {
             switch (imageOrientation) {
-                case DEFAULT: return DEG90;
-                case DEG90: return DEG180;
-                case DEG180: return DEG270;
-                case DEG270: return DEFAULT;
-                default: return DEFAULT;
+                case DEFAULT:
+                    return DEG90;
+                case DEG90:
+                    return DEG180;
+                case DEG180:
+                    return DEG270;
+                case DEG270:
+                    return DEFAULT;
+                default:
+                    return DEFAULT;
             }
         }
     }
